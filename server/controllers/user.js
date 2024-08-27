@@ -49,12 +49,22 @@ export const registerUser = async (req, res) => {
       bio,
       image
     })
-
+    
     //Save the new user to database
-    await newUser.save();
+    const savedUser = await newUser.save();
 
-    //Return success message
-    res.status(201).json({ message: 'User registered successfully!' });
+    // Generate JWT
+    const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: '24h' });
+
+    savedUser.token = token;
+    await savedUser.save();
+
+    //Send response
+    res.status(201).json({
+      message: 'User registered successfully!',
+      token,
+      user: { id: user._id, username: user.username, email: user.email }
+    });
 
   } catch (error) {
     console.log('Error during registration', error);
@@ -88,7 +98,7 @@ export const loginUser = async (req, res) => {
     }
 
     // Generate JWT
-    const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: '1h' });
+    const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: '24h' });
 
     // Send response
     res.status(200).json({ token, user: { id: user._id, username: user.username, email: user.email } });

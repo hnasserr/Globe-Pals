@@ -1,4 +1,5 @@
 import mongoose from 'mongoose';
+import { commentSchema } from './comments.js';
 
 const tripSchema = new mongoose.Schema({
   title: { 
@@ -38,7 +39,7 @@ const tripSchema = new mongoose.Schema({
   accommodation: {
     name: String,
     address: String,
-    type: String,  // e.g., Hotel, Hostel, Airbnb, etc.
+    type: { type: String },  // e.g., Hotel, Hostel, Airbnb, etc.
     contactInfo: String
   },
   transportation: {
@@ -47,8 +48,8 @@ const tripSchema = new mongoose.Schema({
   },
   budget: {
     totalCost: { 
-      type: Number, 
-      required: true 
+      total: {type: Number, required: true} , 
+      currency: { type: String, required: true }
     },
     costBreakdown: {
       accommodation: Number,
@@ -67,6 +68,10 @@ const tripSchema = new mongoose.Schema({
       default: 1 
     }
   },
+  participants: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User'
+  }],
   tripLeader: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',
@@ -91,6 +96,18 @@ const tripSchema = new mongoose.Schema({
     enum: ['Upcoming', 'Ongoing', 'Completed', 'Canceled'],
     default: 'Upcoming'
   },
+  spotsAvailable: {
+    type: Number,
+    required: true
+  },
+  activityLevel: {
+    type: String,
+    enum: ['Low', 'Moderate', 'High'],
+    required: true
+  },
+  travelPreferences: {
+    type: String 
+  },
   media: {
     photos: [ 
       { 
@@ -103,6 +120,7 @@ const tripSchema = new mongoose.Schema({
       } 
     ]
   },
+  comments: [commentSchema],
   createdAt: { 
     type: Date, 
     default: Date.now 
@@ -111,6 +129,6 @@ const tripSchema = new mongoose.Schema({
     type: Date, 
     default: Date.now 
   }
-});
+}, { timestamps: true });
 
 export const TripModel = mongoose.model('Trip', tripSchema);

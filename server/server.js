@@ -1,8 +1,9 @@
 import express from "express";
 import cors from "cors";
 import 'dotenv/config'
-import userRouter from "./routes/user.js";
 import mongoose from "mongoose";
+import userRouter from "./routes/user.js";
+import tripRouter from "./routes/trip.js";
 
 
 
@@ -15,12 +16,12 @@ const middlewares = (app) => {
       extended: true,
     })
   );
-  app.use(cors());
 }
-
+app.use(cors()); 
 
 const establishedRoutes = (app) => {
   app.use('/api/users', userRouter);
+  app.use('/api/trips', tripRouter);
   app.use('*', (req, res) => res.status(404).json({ error: "Endpoint not found." }));   
 }
 
