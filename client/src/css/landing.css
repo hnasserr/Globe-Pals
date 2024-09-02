@@ -1,6 +1,6 @@
 
 .hero-background {
-  background-image: url('https://www.tripgiraffe.com/static/assets/bg.jpg');
+  background-image: url('https: //res.cloudinary.com/dwflegkjq/image/upload/v1724837907/pexels-photo-4881619_ih48s7.jpg');
   background-size: cover;
   background-position: center;
   min-height: 100vh;
@@ -18,8 +18,8 @@
 
 .hero-title {
   font-size: 2rem;
-  margin-top: 15rem;;
-  /* margin-bottom: 1rem; */
+  margin-top: 15rem;; 
+  margin-bottom: 1rem; 
   line-height: 1.2;
 }
 
@@ -52,6 +52,10 @@
     max-width: 600px;
   }
 
+  .hero-background {
+    background-image: url('https://www.tripgiraffe.com/static/assets/bg.jpg');
+  }
+
   .hero-title {
     font-size: 3rem;
   }
@@ -77,12 +81,7 @@
   }
 }
 
-@media (max-width: 450px) {
-  .hero-background {
-    background-image: url('https://res.cloudinary.com/dctipxdo4/image/upload/c_limit,w_600/q_70,f_auto/static/rn50e1idzyww9blug42l');
-  }
 
-  /* .hero-description, .hero-title {
-    color: ;
-  } */
-}
+
+
+

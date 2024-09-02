@@ -1,0 +1,33 @@
+/* Default background image for larger screens */
+.hero-background {
+  background-image: url('https://www.tripgiraffe.com/static/assets/bg.jpg');
+  background-size: cover;
+  background-position: center;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+}
+
+/* Background image for mobile screens with card-like styling */
+@media (max-width: 768px) {
+  .hero-background {
+    background-image: url('https://images.pexels.com/photos/4881619/pexels-photo-4881619.jpeg?auto=compress&cs=tinysrgb&w=600');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    min-height: 70vh;
+    /* Adjust height for mobile */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+    transform: rotate(-5deg);
+    /* Slight twist effect */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    /* Optional: Add some shadow to mimic a card */
+    border-radius: 15px;
+    /* Optional: Add rounded corners */
+  }
+} 

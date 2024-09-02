@@ -24,9 +24,10 @@ export const getAllUsers = async (req, res) => {
 }
 
 export const registerUser = async (req, res) => { 
-  const { email, username, password, firstName, lastName, birthdate, bio, image } = req.body;
+  const { email, username, password, firstName, lastName, birthdate, bio, avatar } = req.body;
 
   try { 
+    console.log('Request received :>> ', req.body);
     //Check if the email or username already exists 
     const existingUser = await UserModel.findOne({ $or: [{ email }, { username }] });
 
@@ -47,14 +48,14 @@ export const registerUser = async (req, res) => {
       lastName,
       birthdate,
       bio,
-      image
+      avatar
     })
     
     //Save the new user to database
     const savedUser = await newUser.save();
 
     // Generate JWT
-    const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: '24h' });
+    const token = jwt.sign({ id: savedUser._id }, process.env.JWT_SECRET, { expiresIn: '24h' });
 
     savedUser.token = token;
     await savedUser.save();
@@ -63,7 +64,7 @@ export const registerUser = async (req, res) => {
     res.status(201).json({
       message: 'User registered successfully!',
       token,
-      user: { id: user._id, username: user.username, email: user.email }
+      user: { id: savedUser._id, username: savedUser.username, email: savedUser.email }
     });
 
   } catch (error) {
@@ -112,13 +113,13 @@ export const loginUser = async (req, res) => {
 
 export const updateUserProfile = async (req, res) => {
   const userID = req.user.id; // Get the user ID from the auth middleware
-  const { firstName, lastName, bio, image } = req.body;
+  const { firstName, lastName, bio, avatar } = req.body;
 
   try {
     // Find the user and update their profile
     const updatedUser = await UserModel.findByIdAndUpdate(
       userID,
-      { firstName, lastName, bio, image },
+      { firstName, lastName, bio, avatar },
       { new: true, runValidators: true }
     );
 
@@ -135,7 +136,7 @@ export const updateUserProfile = async (req, res) => {
         firstName: updatedUser.firstName,
         lastName: updatedUser.lastName,
         bio: updatedUser.bio,
-        image: updatedUser.image,
+        image: updatedUser.avatar,
       }
     });
   } catch (error) {

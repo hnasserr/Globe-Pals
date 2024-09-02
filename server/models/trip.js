@@ -107,7 +107,7 @@ const tripSchema = new mongoose.Schema({
   },
   travelPreferences: {
     type: String 
-  },
+  }, 
   media: {
     photos: [ 
       { 
