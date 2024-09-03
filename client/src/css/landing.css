@@ -1,6 +1,6 @@
 
 .hero-background {
-  background-image: url('https: //res.cloudinary.com/dwflegkjq/image/upload/v1724837907/pexels-photo-4881619_ih48s7.jpg');
+  background-image: url('https://res.cloudinary.com/cozoprojects/image/upload/v1724837907/pexels-photo-4881619_ih48s7.jpg');
   background-size: cover;
   background-position: center;
   min-height: 100vh;
@@ -72,6 +72,10 @@
 
 /* Media query for desktop and larger screens */
 @media (min-width: 1024px) {
+  .hero-background {
+      background-image: url('https://www.tripgiraffe.com/static/assets/bg.jpg');
+    }
+
   .hero-title {
     font-size: 4rem;
   }
