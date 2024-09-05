@@ -1,12 +1,16 @@
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser } from "@fortawesome/free-regular-svg-icons";
-import { useState } from "react";
+import { useState, useContext } from "react";
 import ProfileModal from "./ProfileModal";
+import Sidebar from "./SideBar";
+import { AuthContext } from "../context/AuthContext"; // Import the AuthContext
 
 const NavBar: React.FC = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const [isProfileOpen, setIsProfileOpen] = useState(false);
+
+  const auth = useContext(AuthContext); // Access the auth context
 
   const toggleMenu = () => {
     setMenuOpen(!menuOpen);
@@ -14,6 +18,10 @@ const NavBar: React.FC = () => {
 
   const toggleProfileModal = () => {
     setIsProfileOpen(!isProfileOpen);
+  };
+
+  const handleLogout = () => {
+    auth?.logout(); // Trigger logout function from AuthContext
   };
 
   return (
@@ -28,38 +36,56 @@ const NavBar: React.FC = () => {
         </Link>
       </div>
 
-      <div className={`navbar-menu ${menuOpen ? "active" : ""}`}>
-        <div className="navbar-links">
-          <Link to="/all-trips" onClick={toggleMenu}>
-            All Trips
-          </Link>
-
-          <Link to="/how-it-works" onClick={toggleMenu}>
-            How It Works
-          </Link>
-        </div>
+      <div className="navbar-links">
+        <NavLink
+          to="/all-trips"
+          className={({ isActive }) => (isActive ? "active-link" : "")}
+        >
+          All Trips
+        </NavLink>
+        <NavLink
+          to="/how-it-works"
+          className={({ isActive }) => (isActive ? "active-link" : "")}
+        >
+          How It Works
+        </NavLink>
       </div>
 
       <div className="navbar-auth">
-        <Link to="/signup" className="signup-button">
-          Sign Up
-        </Link>
+        {!auth?.user ? ( // If no user is logged in, show Sign Up button
+          <>
+            <Link to="/signup" className="signup-button">
+              Sign Up
+            </Link>
+            <FontAwesomeIcon
+              className="profile-icon"
+              icon={faUser}
+              onClick={toggleProfileModal}
+            />
+            <ProfileModal isOpen={isProfileOpen} onClose={toggleProfileModal} />
+          </>
+        ) : (
+          <>
+            <FontAwesomeIcon
+              className="profile-icon"
+              icon={faUser}
+              onClick={toggleProfileModal}
+            />
+            <ProfileModal isOpen={isProfileOpen} onClose={toggleProfileModal} />
 
-        <FontAwesomeIcon
-          className="profile-icon"
-          icon={faUser}
-          onClick={toggleProfileModal}
-        />
+            <button className="logout-button" onClick={handleLogout}>
+              Logout
+            </button>
+          </>
+        )}
+      </div>
 
-        <ProfileModal isOpen={isProfileOpen} onClose={toggleProfileModal} />
+      {menuOpen && <Sidebar isOpen={menuOpen} onClose={toggleMenu} />}
 
-        <button className="logout-button">Logout</button>
-
-        <div className="navbar-toggle" onClick={toggleMenu}>
-          <span></span>
-          <span></span>
-          <span></span>
-        </div>
+      <div className="navbar-toggle" onClick={toggleMenu}>
+        <span></span>
+        <span></span>
+        <span></span>
       </div>
     </nav>
   );

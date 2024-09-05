@@ -18,30 +18,34 @@ const Signup: React.FC = () => {
       console.error("Signup failed:", err);
     }
   };
-  const logout = auth?.logout;
+
   return (
-    <>
-      <form onSubmit={handleSubmit}>
-        <input
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          placeholder="Email"
-        />
-        <input
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
-          placeholder="Username"
-        />
-        <input
-          type="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          placeholder="Password"
-        />
-        <button type="submit">Sign Up</button>
+    <div className="auth-container">
+      <form onSubmit={handleSubmit} className="auth-form">
+        <fieldset>
+          <legend>Sign Up</legend>
+          <input
+            type="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            placeholder="Email"
+          />
+          <input
+            type="text"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+            placeholder="Username"
+          />
+          <input
+            type="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            placeholder="Password"
+          />
+          <button type="submit">Sign Up</button>
+        </fieldset>
       </form>
-      <button onClick={logout}>logout</button>
-    </>
+    </div>
   );
 };
 

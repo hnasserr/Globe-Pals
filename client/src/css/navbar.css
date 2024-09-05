@@ -29,71 +29,110 @@
   margin: 4px 0;
   transition: 0.3s;
 }
+/*********************/
 
-/* Menu styles */
-.navbar-menu {
-  position: absolute;
-  top: 100%;
-  left: 0;
-  right: 0;
-  background-color: #ffffff;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  display: none;
-  padding: 1rem;
-}
-
-.navbar-menu.active {
-  display: block;
-}
-
+/* Links section */
 .navbar-links {
+  display: none;
+}
+/****************/
+
+
+
+/* Auth section */
+.navbar-auth {
+  display: none;
+}
+/*****************/
+
+
+
+/* Sidebar Styles */
+.sidebar-overlay {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: none;
+  justify-content: flex-end;
+  z-index: 1000;
+}
+
+.sidebar-overlay.active {
+  display: flex;
+}
+
+.sidebar-content {
+  background: white;
+  width: 80%;
+  max-width: 300px;
+  height: 100%;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+.sidebar-close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+
+.sidebar-modal {
+  background-color: #F5F5F5;
+}
+
+.sidebar-links {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.sidebar-links a{
+  text-decoration: none;
+  color: black;
+  transition: color 0.3s ease;
+}
+
+.sidebar-links a:hover {
+  color: #FF6F00;
+}
+
+.sidebar-footer {
+  margin-top: auto;
   display: flex;
   flex-direction: column;
   gap: 1rem;
 }
 
-.navbar-links a {
-  color: #333333;
+.sidebar-footer a{
   text-decoration: none;
-  font-weight: 500;
-  font-size: 16px;
-  transition: color 0.3s ease;
-}
-
-.navbar-links a:hover {
-  color: #FF6F00;
-}
-
-/* Auth section */
-.navbar-auth {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.navbar-auth .profile-icon,
-.navbar-auth .signup-button,
-.navbar-auth .logout-button {
-  padding: 0.5rem;
-  color: #FF6F00;
-  text-decoration: none;
-  transition: background-color 0.3s ease, color 0.3s ease;
-  border: 2px solid #FF6F00;
-  border-radius: 4px;
 }
 
 
-.navbar-auth .logout-button {
-  font-size: .95rem;
-  background-color: white;
-}
 
-.navbar-auth .profile-icon:hover,
-.navbar-auth .signup-button:hover,
-.navbar-auth .logout-button:hover {
-  background-color: #FF6F00;
-  color: #FFFFFF;
-}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 /* Modal */
@@ -181,6 +220,16 @@
 
 
 
+
+
+
+
+
+
+
+
+
+
 /* Responsive design */
 @media (min-width: 768px) {
   .navbar-toggle {
@@ -195,15 +244,60 @@
   }
 
   .navbar-links {
+    display: flex;
     flex-direction: row;
     gap: 2rem;
   }
 
+  .navbar-links .active-link {
+    color: #FF6F00;
+    font-weight: bold;
+  }
+
+  .navbar-links a {
+    color: #333333;
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 16px;
+    transition: color 0.3s ease;
+  }
+
+  .navbar-links a:hover {
+    color: #FF6F00;
+  }
+
+
+  .navbar-auth {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  
   .navbar-auth .profile-icon,
   .navbar-auth .signup-button,
   .navbar-auth .logout-button {
     padding: 0.5rem 1rem;
+    color: #FF6F00;
+    text-decoration: none;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    border: 2px solid #FF6F00;
+    border-radius: 4px;
+    cursor: pointer;
   }
+
+  .navbar-auth .logout-button {
+    font-size: .95rem;
+    background-color: white;
+  }
+
+  .navbar-auth .profile-icon:hover,
+  .navbar-auth .signup-button:hover,
+  .navbar-auth .logout-button:hover {
+    background-color: #FF6F00;
+    color: #FFFFFF;
+  }
+
+  
 
   .navbar-logo img {
     height: 50px;

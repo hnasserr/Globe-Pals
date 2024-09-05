@@ -2,6 +2,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import LandingPage from "./pages/LandingPage";
 import Signup from "./components/SignUp";
 import Login from "./components/Login";
+import Try from "./components/Try";
 import AllTrips from "./pages/AllTrips";
 import HowItWorks from "./pages/HowItWorks";
 
@@ -26,6 +27,10 @@ function App() {
     {
       path: "login",
       element: <Login />,
+    },
+    {
+      path: "try",
+      element: <Try />,
     },
   ]);
 
