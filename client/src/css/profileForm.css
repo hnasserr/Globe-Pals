@@ -1,0 +1,105 @@
+/* Container for the form */
+.edit-profile-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Glassmorphism effect */
+.edit-profile-card {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
+  padding: 40px;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  width: 350px;
+  max-width: 100%;
+  text-align: center;
+}
+
+/* Bubbles */
+.bubble {
+  position: absolute;
+  border-radius: 50%;
+  background: #FF6F00;
+  opacity: 0.6;
+  filter: blur(15px);
+  animation: float 10s infinite;
+}
+
+.bubble:nth-child(1) {
+  width: 200px;
+  height: 200px;
+  top: 10%;
+  left: 20%;
+  animation-duration: 12s;
+}
+
+.bubble:nth-child(2) {
+  width: 150px;
+  height: 150px;
+  top: 50%;
+  left: 70%;
+  animation-duration: 15s;
+}
+
+.bubble:nth-child(3) {
+  width: 100px;
+  height: 100px;
+  bottom: 20%;
+  right: 30%;
+  animation-duration: 8s;
+}
+
+/* Float animation */
+@keyframes float {
+  0% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-20px);
+  }
+
+  100% {
+    transform: translateY(0);
+  }
+}
+
+/* Form input styling */
+.edit-profile-card input,
+.edit-profile-card textarea {
+  width: 100%;
+  padding: 10px;
+  margin: 10px 0;
+  border-radius: 8px;
+  border: 2px solid #ddd;
+  outline: none;
+  background: rgba(255, 255, 255, 0.3);
+  color: #333;
+}
+
+.edit-profile-card input:focus,
+.edit-profile-card textarea:focus {
+  border-color: #FF6F00;
+}
+
+.edit-profile-card button {
+  padding: 10px 20px;
+  border-radius: 8px;
+  border: none;
+  background-color: #FF6F00;
+  color: #fff;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.edit-profile-card button:hover {
+  background-color: #e65c00;
+}

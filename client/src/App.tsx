@@ -5,6 +5,7 @@ import Login from "./components/Login";
 import Try from "./components/Try";
 import AllTrips from "./pages/AllTrips";
 import HowItWorks from "./pages/HowItWorks";
+import EditProfilePage from "./pages/EditProfilePage";
 
 function App() {
   const router = createBrowserRouter([
@@ -27,6 +28,10 @@ function App() {
     {
       path: "login",
       element: <Login />,
+    },
+    {
+      path: "edit-profile",
+      element: <EditProfilePage />,
     },
     {
       path: "try",

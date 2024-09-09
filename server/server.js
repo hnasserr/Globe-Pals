@@ -17,6 +17,7 @@ const middlewares = (app) => {
     })
   );
   app.use(cors()); 
+  cloudinaryConfig();
 }
 
 const establishedRoutes = (app) => {
@@ -45,7 +46,6 @@ const connectAndStart = (app) => {
   middlewares(app);
   establishedRoutes(app);
   connectAndStart(app);
-  cloudinaryConfig();
 })();
 
 

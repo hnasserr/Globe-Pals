@@ -4,6 +4,9 @@ import App from "./App.tsx";
 import "./css/landing.css";
 import "./css/navbar.css";
 import "./css/auth.css";
+import "./css/sidebar.css";
+import "./css/userProfileModal.css";
+import "./css/profileForm.css";
 import "./App.css";
 import { AuthProvider } from "./context/AuthContext.tsx";
 

@@ -1,31 +1,57 @@
 // src/context/AuthContext.tsx
 import React, { createContext, useState, useEffect } from "react";
 import { baseURL } from "../utils/baseURL";
+import { User } from "../@types";
 
 interface AuthContextProps {
-  user: any;
+  user: User | null;
   token: string | null;
   login: (email: string, password: string) => Promise<void>;
   signup: (userData: any) => Promise<void>;
   logout: () => void;
+  setUser: (user: any) => void;
 }
 
-export const AuthContext = createContext<AuthContextProps | undefined>(
-  undefined
-);
+const authContextDefault: AuthContextProps = {
+  user: null,
+  token: null,
+  login: () => {
+    throw new Error("Context not defined !");
+  },
+  signup: () => {
+    throw new Error("Context not defined !");
+  },
+  logout: () => {
+    throw new Error("Context not defined !");
+  },
+  setUser: () => {
+    throw new Error("Context not defined !");
+  },
+};
+
+export const AuthContext = createContext<AuthContextProps>(authContextDefault);
 
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
-  const [user, setUser] = useState<any>(null);
+  const [user, setUser] = useState<User | null>(null);
   const [token, setToken] = useState<string | null>(null);
 
   useEffect(() => {
     const savedToken = localStorage.getItem("token");
     const savedUser = localStorage.getItem("user");
+
+    console.log("Saved token: ", savedToken);
+    console.log("Saved user: ", savedUser);
+
     if (savedToken) {
       setToken(savedToken);
-      setUser(JSON.parse(savedUser || "{}"));
+    }
+
+    if (savedUser) {
+      setUser(JSON.parse(savedUser));
+    } else {
+      console.log("No user found in local storage.");
     }
   }, []);
 
@@ -38,6 +64,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
 
     if (response.ok) {
       const data = await response.json();
+      console.log("Login response data: ", data);
       setUser(data.user);
       setToken(data.token);
       localStorage.setItem("token", data.token);
@@ -74,7 +101,9 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
   };
 
   return (
-    <AuthContext.Provider value={{ user, token, login, signup, logout }}>
+    <AuthContext.Provider
+      value={{ user, token, login, signup, logout, setUser }}
+    >
       {children}
     </AuthContext.Provider>
   );

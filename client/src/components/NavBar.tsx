@@ -4,13 +4,14 @@ import { faUser } from "@fortawesome/free-regular-svg-icons";
 import { useState, useContext } from "react";
 import ProfileModal from "./ProfileModal";
 import Sidebar from "./SideBar";
-import { AuthContext } from "../context/AuthContext"; // Import the AuthContext
+import { AuthContext } from "../context/AuthContext";
+import UserProfileModal from "./UserProfileModal";
 
 const NavBar: React.FC = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const [isProfileOpen, setIsProfileOpen] = useState(false);
 
-  const auth = useContext(AuthContext); // Access the auth context
+  const auth = useContext(AuthContext);
 
   const toggleMenu = () => {
     setMenuOpen(!menuOpen);
@@ -21,7 +22,7 @@ const NavBar: React.FC = () => {
   };
 
   const handleLogout = () => {
-    auth?.logout(); // Trigger logout function from AuthContext
+    auth?.logout();
   };
 
   return (
@@ -71,10 +72,14 @@ const NavBar: React.FC = () => {
               icon={faUser}
               onClick={toggleProfileModal}
             />
-            <ProfileModal isOpen={isProfileOpen} onClose={toggleProfileModal} />
+            <UserProfileModal
+              isOpen={isProfileOpen}
+              onClose={toggleProfileModal}
+              username={auth.user.username}
+            />
 
             <button className="logout-button" onClick={handleLogout}>
-              Logout
+              Sign Out
             </button>
           </>
         )}

@@ -1,6 +1,5 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import "../css/navbar.css";
 
 interface ProfileModalProps {
   isOpen: boolean;
@@ -17,6 +16,7 @@ const ProfileModal: React.FC<ProfileModalProps> = ({ isOpen, onClose }) => {
         <button className="modal-close" onClick={onClose}>
           &times;
         </button>
+
         <div className="modal-body">
           <h3>
             Start chatting with like-minded travelers and planning your next big
