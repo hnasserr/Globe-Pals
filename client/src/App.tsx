@@ -2,10 +2,10 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import LandingPage from "./pages/LandingPage";
 import Signup from "./components/SignUp";
 import Login from "./components/Login";
-import Try from "./components/Try";
 import AllTrips from "./pages/AllTrips";
 import HowItWorks from "./pages/HowItWorks";
 import EditProfilePage from "./pages/EditProfilePage";
+// import ProtectedRoute from "./utils/ProtectedRoute";
 
 function App() {
   const router = createBrowserRouter([
@@ -31,11 +31,12 @@ function App() {
     },
     {
       path: "edit-profile",
-      element: <EditProfilePage />,
-    },
-    {
-      path: "try",
-      element: <Try />,
+      element: (
+        // <ProtectedRoute>
+        <EditProfilePage />
+        // </ProtectedRoute>
+        //TODO: check USer state
+      ),
     },
   ]);
 

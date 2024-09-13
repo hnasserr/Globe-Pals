@@ -9,10 +9,11 @@ interface AuthContextProps {
   login: (email: string, password: string) => Promise<void>;
   signup: (userData: any) => Promise<void>;
   logout: () => void;
-  setUser: (user: any) => void;
+  setUser: React.Dispatch<React.SetStateAction<User | null>>;
+  loading: boolean; // Add loading state
 }
 
-const authContextDefault: AuthContextProps = {
+const authContextInitialValue: AuthContextProps = {
   user: null,
   token: null,
   login: () => {
@@ -27,15 +28,19 @@ const authContextDefault: AuthContextProps = {
   setUser: () => {
     throw new Error("Context not defined !");
   },
+  loading: true, // Initial loading state is true
 };
 
-export const AuthContext = createContext<AuthContextProps>(authContextDefault);
+export const AuthContext = createContext<AuthContextProps>(
+  authContextInitialValue
+);
 
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
   const [user, setUser] = useState<User | null>(null);
   const [token, setToken] = useState<string | null>(null);
+  const [loading, setLoading] = useState(true); // Loading state
 
   useEffect(() => {
     const savedToken = localStorage.getItem("token");
@@ -48,11 +53,25 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
       setToken(savedToken);
     }
 
-    if (savedUser) {
-      setUser(JSON.parse(savedUser));
-    } else {
-      console.log("No user found in local storage.");
-    }
+    const getActiveUser = async () => {
+      if (!savedToken) return;
+      try {
+        const getUser = await fetch(`${baseURL}/api/users/profile`, {
+          headers: {
+            Authorization: `Bearer ${savedToken}`,
+          },
+        });
+
+        const result = await getUser.json();
+        setUser(result);
+      } catch (error) {
+        console.error(error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    getActiveUser();
   }, []);
 
   const login = async (email: string, password: string) => {
@@ -102,7 +121,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
 
   return (
     <AuthContext.Provider
-      value={{ user, token, login, signup, logout, setUser }}
+      value={{ user, token, login, signup, logout, setUser, loading }}
     >
       {children}
     </AuthContext.Provider>

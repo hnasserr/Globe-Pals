@@ -1,6 +1,7 @@
 import React, { useState, useContext } from "react";
 import { AuthContext } from "../context/AuthContext";
 import { useNavigate } from "react-router-dom";
+import NavBar from "./NavBar";
 
 const Login: React.FC = () => {
   const [email, setEmail] = useState("");
@@ -20,26 +21,34 @@ const Login: React.FC = () => {
   };
 
   return (
-    <div className="auth-container">
-      <form onSubmit={handleSubmit} className="auth-form">
-        <fieldset>
-          <legend>Login</legend>
-          <input
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            placeholder="Email"
-          />
-          <input
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            placeholder="Password"
-          />
-          <button type="submit">Log In</button>
-        </fieldset>
-      </form>
-    </div>
+    <>
+      <NavBar />
+      <div className="auth-container">
+        <form onSubmit={handleSubmit} className="auth-form">
+          <fieldset>
+            <legend>Login</legend>
+            <input
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              placeholder="Email"
+            />
+            <input
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              placeholder="Password"
+            />
+            <button type="submit">Log In</button>
+            {/* <p>
+              Need to <Link to="/signUp">sign up</Link> first ?
+            </p> */}
+          </fieldset>
+        </form>
+      </div>
+    </>
   );
 };
 
 export default Login;
+
+//TODO : if the user doesn't have an account redirect to sign up !

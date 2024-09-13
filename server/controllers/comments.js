@@ -62,7 +62,8 @@ export const deleteTripComment = async (req, res) => {
         if (comment.user.toString() !== userId && trip.tripLeader.toString() !== userId) {
             return res.status(403).json({ error: 'You do not have permission to delete this comment' });
         }
-
+      // dont make trip leaders act like trump
+      
         // Remove the comment using pull
         trip.comments.pull(commentId);
 

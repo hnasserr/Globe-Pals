@@ -1,12 +1,24 @@
 import { TripModel } from '../models/trip.js';
 
 export const createTrip = async (req, res) => {
-  console.log("aasdasd");
+  console.log('Request received :>> ', req.body);
   const { title, description, destination, startDate, endDate, accommodation, transportation, itinerary, groupSize, budget, packingList, safetyInfo, mealPlans, cancellationPolicy, tripStatus, media, spotsAvailable, activityLevel, travelPreferences,  createdAt, updatedAt } = req.body;
   const userId = req.user.id;
   console.log(req.body);
 
   try {
+    
+    let photosArr = null;
+    if (photosArr) {
+      try {
+        photosArr = await imageUpload2(media.photos, "mern_project/trips");
+      } catch (uploadError) {
+        console.log('Error uploading avatar:', uploadError);
+        // You can choose to continue without the avatar, or return an error
+        // return res.status(400).json({ error: 'Error uploading avatar' });
+      }
+    }
+
     const newTrip = new TripModel({
       title,
       destination,
@@ -97,13 +109,14 @@ export const getAllTrips = async (req, res) => {
   try {
     // Find all trips in the database
     const trips = await TripModel.find();
-
+    
     // Check if any trips are found
     if (!trips || trips.length === 0) {
       return res.status(404).json({ message: 'No trips found' });
+    } else {
+      res.status(200).json({ message: 'All trips', trips });
     }
 
-    res.status(200).json({ message: 'All trips', trips });
   } catch (error) {
     console.error('Error fetching trips:', error);
     res.status(500).json({ error: 'Server error, please try again later' });
@@ -313,7 +326,7 @@ export const getTripParticipants = async (req, res) => {
 
   try {
     // Find the trip by ID and populate the participants array with user details
-    const trip = await TripModel.findById(tripId).populate('participants', 'name email');
+    const trip = await TripModel.findById(tripId).populate('participants', 'username email');
 
     if (!trip) {
       return res.status(404).json({ error: 'Trip not found' });

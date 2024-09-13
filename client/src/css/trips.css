@@ -1,0 +1,297 @@
+/* Trips.css */
+
+.trips-page {
+  padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.trips-title {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.trips-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 20px;
+}
+
+.trip-card {
+  background-color: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  transition: transform 0.3s ease;
+  cursor: pointer;
+}
+
+.trip-card:hover {
+  transform: translateY(-5px);
+}
+
+.trip-image {
+  position: relative;
+  height: 30vh;
+  overflow: hidden;
+}
+
+.slick-slider {
+  width: 100%;
+  height: 100%;
+}
+
+.slick-slide img {
+  width: 100%;
+  height: 30vh;
+  object-fit: cover;
+  border-radius: 8px 8px 0 0;
+}
+
+.trip-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.no-photo {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #f0f0f0;
+  color: #666;
+}
+
+.trip-info {
+  padding: 15px;
+}
+
+.trip-title {
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.trip-description {
+  font-size: 14px;
+  color: #666;
+  margin-bottom: 10px;
+  display: -webkit-box;
+  /* -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical; */
+  overflow: hidden;
+}
+
+.trip-details {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 14px;
+}
+
+.trip-price {
+  font-weight: bold;
+  color: #4CAF50;
+}
+
+.trip-duration {
+  color: #666;
+}
+
+/* Media query for tablets */
+@media (min-width: 768px) {
+  .trips-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .trips-title {
+    font-size: 28px;
+  }
+}
+
+/* Media query for desktops */
+@media (min-width: 1024px) {
+  .trips-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .trips-title {
+    font-size: 32px;
+  }
+}
+
+
+/**/
+
+/* 
+import React,
+{
+useContext,
+useEffect,
+useState
+}
+
+from "react";
+
+import {
+  baseURL
+}
+
+from "../utils/baseURL";
+
+import {
+  Trip
+}
+
+from "../@types";
+
+import {
+  AuthContext
+}
+
+from "../context/AuthContext";
+
+// Define the type for your Trip (you already have this type defined earlier)
+
+const Trips: React.FC=()=> {
+  const {
+    token
+  }
+
+  =useContext(AuthContext); // Get token from AuthContext
+  const [trips,
+  setTrips]=useState<Trip[]>([]); // Initialize with an empty array
+  const [loading,
+  setLoading]=useState(true);
+  const [error,
+  setError]=useState<string | null>(null);
+
+  useEffect(()=> {
+      const fetchTrips=async ()=> {
+        if ( !token) {
+          setError("Unauthorized: Token is missing.");
+          setLoading(false);
+          return;
+        }
+
+        try {
+          const response=await fetch(`$ {
+              baseURL
+            }
+
+            /api/trips/all`, {
+            method: "GET",
+            headers: {
+              Authorization: `Bearer $ {
+                token
+              }
+
+              `,
+              "Content-Type": "application/json",
+            }
+
+            ,
+          });
+
+        if ( !response.ok) {
+          if (response.status===401) {
+            throw new Error("Unauthorized: Invalid token.");
+          }
+
+          throw new Error(`Error: $ {
+              response.statusText
+            }
+
+            `);
+        }
+
+        const data=await response.json();
+        console.log("Received data:", data); // Log the received data
+        setTrips(data.trips);
+      }
+
+      catch (err: any) {
+        setError(err.message);
+      }
+
+      finally {
+        setLoading(false); // Make sure to stop loading in any case
+      }
+    }
+
+    ;
+
+    fetchTrips();
+  }
+
+  , [token]);
+
+if (loading) {
+  return <p>Loading...</p>;
+}
+
+if (error) {
+  return <p> {
+    error
+  }
+
+  </p>;
+}
+
+return (<div className="trip-container" > {
+    trips.map((trip)=> (<div key= {
+          trip._id
+        }
+
+        className="trip-card" > <img src= {
+          trip.media.photos ![0] || "default_image.jpg"
+        }
+
+        alt= {
+          trip.title
+        }
+
+        className="trip-image"
+
+        /> <div className="trip-info" > <h3 className="" > {
+          trip.title
+        }
+
+        </h3> <p> <strong>Destination:</strong> {
+          trip.destination
+        }
+
+        </p> <p> <strong>Start Date:</strong> {
+          " "
+        }
+
+          {
+          new Date(trip.startDate).toLocaleDateString()
+        }
+
+        </p> <p> <strong>End Date:</strong> {
+          " "
+        }
+
+          {
+          new Date(trip.endDate).toLocaleDateString()
+        }
+
+        </p> <p> {
+          trip.description
+        }
+
+        </p> </div> </div>))
+  }
+
+  </div>);
+}
+
+;
+
+export default Trips;
+
+*/

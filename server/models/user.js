@@ -9,7 +9,10 @@ const userSchema = new mongoose.Schema({
   lastName: String,
   birthdate: Date,
   bio: { type: String, default: '' },
-  avatar: { type: String, default: 'https://res.cloudinary.com/cozoprojects/image/upload/v1724841498/icons8-user-default-64_nkanlm.png' }
+  avatar: { 
+    url: { type: String, default: 'https://res.cloudinary.com/cozoprojects/image/upload/v1724841498/icons8-user-default-64_nkanlm.png' },
+    public_id: {type: String }
+  }
 }, { timestamps: true })
 
 

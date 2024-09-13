@@ -2,6 +2,8 @@ import { UserModel } from "../models/user.js";
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import 'dotenv/config'
+import { imageUpload, imageUpload2 } from "../utils/imageUpload.js";
+import { cleanTemp } from "../utils/cleanTemp.js";
 
 
 export const testingEndpoint = (req, res) => {
@@ -39,6 +41,16 @@ export const registerUser = async (req, res) => {
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(password, salt);
 
+    let avatarObject = null;
+    if (avatar) {
+      try {
+        avatarObject = await imageUpload2(avatar, "mern_project/users");
+      } catch (uploadError) {
+        console.log('Error uploading avatar:', uploadError);
+        // You can choose to continue without the avatar, or return an error
+        // return res.status(400).json({ error: 'Error uploading avatar' });
+      }
+    }
     //Create new user
     const newUser = new UserModel({
       email,
@@ -48,7 +60,7 @@ export const registerUser = async (req, res) => {
       lastName,
       birthdate,
       bio,
-      avatar
+      avatar: avatarObject
     })
     
     //Save the new user to database
@@ -102,7 +114,7 @@ export const loginUser = async (req, res) => {
     const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: '24h' });
 
     // Send response
-    res.status(200).json({ token, user: { _id: user._id, username: user.username, email: user.email } });
+    res.status(200).json({ token, user: { _id: user._id, username: user.username, email: user.email, avatar: user.avatar } });
 
   } catch (error) {
     console.log('Login error: ', error);
@@ -112,14 +124,25 @@ export const loginUser = async (req, res) => {
 
 
 export const updateUserProfile = async (req, res) => {
+  // TODO: change the harcoded lines 
+  // TODO: change the date from date form into a string 
+  console.log(req.file)
+  console.log(req.body)
   const userID = req.user.id; // Get the user ID from the auth middleware
-  const { firstName, lastName, bio, avatar } = req.body;
+  const { firstName, lastName, bio, birthdate } = req.body;
 
   try {
-    // Find the user and update their profile
+    let avatarObject = undefined;
+    if (req.file) {
+      avatarObject = await imageUpload(req.file, "mern_project/users")
+      cleanTemp(req.file);
+    }
+    console.log(birthdate);
+    console.log(typeof birthdate);
+     // Find the user and update their profile
     const updatedUser = await UserModel.findByIdAndUpdate(
       userID,
-      { firstName, lastName, bio, avatar },
+      { firstName, lastName, bio, avatar: avatarObject, birthdate: birthdate ? new Date(birthdate) : undefined},
       { new: true, runValidators: true }
     );
 
@@ -135,8 +158,9 @@ export const updateUserProfile = async (req, res) => {
         username: updatedUser.username,
         firstName: updatedUser.firstName,
         lastName: updatedUser.lastName,
+        birthdate: updatedUser.birthdate,
         bio: updatedUser.bio,
-        image: updatedUser.avatar,
+        avatar: updatedUser.avatar,
       }
     });
   } catch (error) {
@@ -172,7 +196,7 @@ export const deleteUser = async (req, res) => {
 
     // Find and delete the user
     const deletedUser = await UserModel.findByIdAndDelete(userId);
-
+  //TODO: delete the trips aswell but leave the comments and the reviews 
     if (!deletedUser) {
       return res.status(404).json({ error: 'User not found' });
     }

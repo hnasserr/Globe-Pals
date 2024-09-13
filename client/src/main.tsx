@@ -7,7 +7,10 @@ import "./css/auth.css";
 import "./css/sidebar.css";
 import "./css/userProfileModal.css";
 import "./css/profileForm.css";
+import "./css/trips.css";
 import "./App.css";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 import { AuthProvider } from "./context/AuthContext.tsx";
 
 createRoot(document.getElementById("root")!).render(

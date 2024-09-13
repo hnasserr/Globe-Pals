@@ -7,7 +7,7 @@ import { AuthContext } from "../context/AuthContext";
 interface UserProfileModalProps {
   isOpen: boolean;
   onClose: () => void;
-  username: string; // Assume we pass the username from context or props
+  username: string;
 }
 
 const UserProfileModal: React.FC<UserProfileModalProps> = ({
@@ -16,7 +16,6 @@ const UserProfileModal: React.FC<UserProfileModalProps> = ({
   username,
 }) => {
   const { user } = useContext(AuthContext);
-  console.log(user);
   return (
     <div
       className={`user-modal-overlay ${isOpen ? "active" : ""}`}
@@ -29,7 +28,11 @@ const UserProfileModal: React.FC<UserProfileModalProps> = ({
         <div className="user-profile-header">
           <div className="user-profile-info">
             <div className="profile-icon-placeholder">
-              {user ? user.avatar : <FontAwesomeIcon icon={faUser} />}
+              {user && user.avatar && user.avatar.url ? (
+                <img src={user.avatar.url} />
+              ) : (
+                <FontAwesomeIcon icon={faUser} />
+              )}{" "}
             </div>
             <div className="username-section">
               <h3 className="username">{username}</h3>

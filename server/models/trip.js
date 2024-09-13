@@ -111,12 +111,14 @@ const tripSchema = new mongoose.Schema({
   media: {
     photos: [ 
       { 
-        type: String 
+        url: { type: String },
+        public_id: {type: String}
       } 
     ],
     videos: [ 
       { 
-        type: String 
+        url: { type: String },
+        public_id: { type: String}
       } 
     ]
   },
